@@ -19,6 +19,7 @@ from sklearn.linear_model import LogisticRegression
 
 wine = datasets.load_wine()
 breast = datasets.load_breast_cancer()
+waveform = np.loadtxt("waveform-5000_csv.csv", skiprows=1, delimiter=",")
 
 def fitness(x, X_train, y_train, X_valid, y_valid, evalute=False):
     if x.ndim==1:
@@ -44,10 +45,10 @@ def fitness(x, X_train, y_train, X_valid, y_valid, evalute=False):
 
 max_iter = 70
 num_particle = 8
-times = 20
+times = 1
 table = np.zeros((6, 23))
-table[2, :] = -np.ones(23)*np.inf
-table[3, :] = np.ones(23)*np.inf
+table[2, :] = np.ones(23)*np.inf
+table[3, :] = -np.ones(23)*np.inf
 ALL = np.zeros((times, 23))
 for i in range(times):
     X = wine.data
@@ -69,8 +70,10 @@ for i in range(times):
     score = fitness(optimizer.gBest_X, 
                     np.vstack((X_train, X_valid)), np.hstack((y_train, y_valid)), 
                     X_test, y_test, evalute=True)
-    if score>table[2, 0]: table[2, 0] = score
-    if score<table[3, 0]: table[3, 0] = score
+    if score==np.inf or score==-np.inf:
+        print(456)
+    if score<table[2, 0]: table[2, 0] = score
+    if score>table[3, 0]: table[3, 0] = score
     table[0, 0] += score
     table[1, 0] += end - start
     table[5, 0] +=sum(optimizer.gBest_X)
@@ -95,13 +98,44 @@ for i in range(times):
     score = fitness(optimizer.gBest_X, 
                     np.vstack((X_train, X_valid)), np.hstack((y_train, y_valid)), 
                     X_test, y_test, evalute=True)
+    if score==np.inf or score==-np.inf:
+        print(789)
     if score<table[2, 1]: table[2, 1] = score
     if score>table[3, 1]: table[3, 1] = score
     table[0, 1] += score
     table[1, 1] += end - start
     table[5, 1] +=sum(optimizer.gBest_X)
     ALL[i, 1] = score
-    
+
+    # Too Slow!!!!
+    X = waveform[:, :-1]
+    y = waveform[:, -1]
+    num_dim = X.shape[1]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5)
+    X_valid, X_test, y_valid, y_test = train_test_split(X_test, y_test, test_size=0.5)
+    sc = StandardScaler()
+    X_train = sc.fit_transform(X_train)
+    X_valid = sc.transform(X_valid)
+    X_test = sc.transform(X_test)
+    fit_func = functools.partial(fitness, 
+                                  X_train=X_train, y_train=y_train, 
+                                  X_valid=X_valid, y_valid=y_valid)
+    optimizer = BWOA(fit_func=fit_func, num_dim=num_dim, num_particle=num_particle, max_iter=max_iter)
+    start = time.time()
+    optimizer.opt()
+    end = time.time()
+    score = fitness(optimizer.gBest_X, 
+                    np.vstack((X_train, X_valid)), np.hstack((y_train, y_valid)), 
+                    X_test, y_test, evalute=True)
+    if score==np.inf or score==-np.inf:
+        print(789)
+    if score<table[2, 2]: table[2, 2] = score
+    if score>table[3, 2]: table[3, 2] = score
+    table[0, 2] += score
+    table[1, 2] += end - start
+    table[5, 2] +=sum(optimizer.gBest_X)
+    ALL[i, 2] = score
+     
     print(i+1)
     
     
@@ -109,7 +143,7 @@ table[:2, :] = table[:2, :] / times
 table[5, :] = table[5, :] / times
 table[4, :] = np.std(ALL, axis=0)
 table = pd.DataFrame(table)
-table.columns=['Breast', 'Wine', 'F3', 'F4', 'F5', 'F6', 'F7', 
+table.columns=['Wine_BWOA', 'Breast_BWOA', 'Waveform_BWOA', 'F4', 'F5', 'F6', 'F7', 
                 'F8', 'F9', 'F10', 'F11', 'F12', 
                 'F13', 'F14', 'F15', 'F16', 'F17', 'F18',
                 'F19', 'F20', 'F21', 'F22', 'F23']

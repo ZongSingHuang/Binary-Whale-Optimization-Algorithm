@@ -30,21 +30,29 @@ class BWOA():
             for i in range(self.num_particle):
                 score = self.fit_func(self.X[i])
                 
-                if score.min()<self.gBest_score:
+                if score.min()<=self.gBest_score:
+                    self.gBest_X = self.X[i].copy()                   
+                    if sum(self.gBest_X)==0:
+                        print(123)
                     self.gBest_score = score.min().copy()
-                    self.gBest_X = self.X[score.argmin()].copy()
-                    self.Lbest.append(self.X[score.argmin()].copy())
-                
+                    self.Lbest.append(self.X[i].copy())
+                    if len(self.Lbest)>3:
+                        self.Lbest = self.Lbest[-3:]
+                    # fake_X = self.gBest_X.copy()
+                    
                 if self.iter>self.max_iter/3:
                     idx = int( np.random.randint(low=0, high=len(self.Lbest), size=1) )
+                    # fake_X = self.Lbest[idx].copy()
                     self.gBest_X = self.Lbest[idx].copy()
 
+                
                 r1 = np.random.uniform()
                 r2 = np.random.uniform()
                 A = 2*a*r1 - a
                 C = 2*r2
                 self.l = np.random.uniform(low=-1, high=1)
                 p = np.random.uniform()               
+                
                 
                 for j in range(self.num_dim):
                     rd = np.random.uniform()
@@ -66,7 +74,7 @@ class BWOA():
                     else:
                         D = np.abs( self.gBest_X[j] - self.X[i,j] )
                         S = D*np.exp(b*self.l)*np.cos(2*np.pi*self.l)
-                        TF = np.abs( np.arctan(S) + 0.09 )
+                        TF = np.abs( np.arctan(S) + 0.09 )/4
                         if rd>0.92 and TF==0.09/4:
                             self.X[i,j] = 1 - self.gBest_X[j]
                         elif rd>TF:
@@ -76,6 +84,7 @@ class BWOA():
             
             self.gBest_curve[self.iter] = self.gBest_score.copy()
             self.iter += 1
+
      
     def plot_curve(self):
         plt.figure()
