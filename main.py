@@ -5,7 +5,7 @@ Created on Fri Sep 25 08:27:39 2020
 @author: ZongSing_NB
 """
 
-from BWOA import BWOA
+from BWOA_speedup import BWOA
 import numpy as np
 import time
 import pandas as pd
@@ -45,7 +45,7 @@ def fitness(x, X_train, y_train, X_valid, y_valid, evalute=False):
 
 max_iter = 70
 num_particle = 8
-times = 1
+times = 20
 table = np.zeros((6, 23))
 table[2, :] = np.ones(23)*np.inf
 table[3, :] = -np.ones(23)*np.inf
@@ -107,34 +107,34 @@ for i in range(times):
     table[5, 1] +=sum(optimizer.gBest_X)
     ALL[i, 1] = score
 
-    # Too Slow!!!!
-    X = waveform[:, :-1]
-    y = waveform[:, -1]
-    num_dim = X.shape[1]
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5)
-    X_valid, X_test, y_valid, y_test = train_test_split(X_test, y_test, test_size=0.5)
-    sc = StandardScaler()
-    X_train = sc.fit_transform(X_train)
-    X_valid = sc.transform(X_valid)
-    X_test = sc.transform(X_test)
-    fit_func = functools.partial(fitness, 
-                                  X_train=X_train, y_train=y_train, 
-                                  X_valid=X_valid, y_valid=y_valid)
-    optimizer = BWOA(fit_func=fit_func, num_dim=num_dim, num_particle=num_particle, max_iter=max_iter)
-    start = time.time()
-    optimizer.opt()
-    end = time.time()
-    score = fitness(optimizer.gBest_X, 
-                    np.vstack((X_train, X_valid)), np.hstack((y_train, y_valid)), 
-                    X_test, y_test, evalute=True)
-    if score==np.inf or score==-np.inf:
-        print(789)
-    if score<table[2, 2]: table[2, 2] = score
-    if score>table[3, 2]: table[3, 2] = score
-    table[0, 2] += score
-    table[1, 2] += end - start
-    table[5, 2] +=sum(optimizer.gBest_X)
-    ALL[i, 2] = score
+    # # Too Slow!!!!
+    # X = waveform[:, :-1]
+    # y = waveform[:, -1]
+    # num_dim = X.shape[1]
+    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5)
+    # X_valid, X_test, y_valid, y_test = train_test_split(X_test, y_test, test_size=0.5)
+    # sc = StandardScaler()
+    # X_train = sc.fit_transform(X_train)
+    # X_valid = sc.transform(X_valid)
+    # X_test = sc.transform(X_test)
+    # fit_func = functools.partial(fitness, 
+    #                               X_train=X_train, y_train=y_train, 
+    #                               X_valid=X_valid, y_valid=y_valid)
+    # optimizer = BWOA(fit_func=fit_func, num_dim=num_dim, num_particle=num_particle, max_iter=max_iter)
+    # start = time.time()
+    # optimizer.opt()
+    # end = time.time()
+    # score = fitness(optimizer.gBest_X, 
+    #                 np.vstack((X_train, X_valid)), np.hstack((y_train, y_valid)), 
+    #                 X_test, y_test, evalute=True)
+    # if score==np.inf or score==-np.inf:
+    #     print(789)
+    # if score<table[2, 2]: table[2, 2] = score
+    # if score>table[3, 2]: table[3, 2] = score
+    # table[0, 2] += score
+    # table[1, 2] += end - start
+    # table[5, 2] +=sum(optimizer.gBest_X)
+    # ALL[i, 2] = score
      
     print(i+1)
     
