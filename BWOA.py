@@ -11,13 +11,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class BWOA():
-    def __init__(self, fit_func, num_dim=30, num_particle=20, max_iter=500):
+    def __init__(self, fit_func, num_dim=30, num_particle=20, max_iter=500, x_max=1, x_min=0):
         self.fit_func = fit_func
         self.num_particle = num_particle
         self.num_dim = num_dim
         self.iter = 0
+        self.x_max = x_max
+        self.x_min = x_min
         self.max_iter = max_iter
-        self.X = np.random.choice([0, 1], size=(self.num_particle, self.num_dim))
+        self.X = 1*(np.random.uniform(low=self.x_min, high=self.x_max, size=[self.num_particle, self.num_dim])>0.5)
         self.gBest_X = None
         self.gBest_score = np.inf
         self.gBest_curve = np.zeros(self.max_iter)
@@ -31,7 +33,7 @@ class BWOA():
                 score = self.fit_func(self.X[i])
                 
                 if score.min()<=self.gBest_score:
-                    self.gBest_X = self.X[i].copy()                   
+                    self.gBest_X = self.X[i].copy()
                     if sum(self.gBest_X)==0:
                         print(123)
                     self.gBest_score = score.min().copy()
