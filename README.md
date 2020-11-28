@@ -3,4 +3,8 @@ Tawhid, M.A., Ibrahim, A.M. Feature selection based on rough set approach, wrapp
 
 https://doi.org/10.1007/s13042-019-00996-5
 
-Zoo, knn(5), acc=0.74510, loss=0.25298, use /16 feature
+data:Breastcancer
+
+50:50 acc:0.94286, feature:[4, 7]/9, loss:0.05879; acc:0.96286, feature:[0, 1, 2, 3, 4, 5, 6, 7, 8]/9, loss:None
+
+90:10 acc:0.93708, feature:[1, 2, 3, 7, 8]/9, loss:0.05342; acc:0.97139, feature:[0, 1, 2, 3, 4, 5, 6, 7, 8]/9, loss:None
