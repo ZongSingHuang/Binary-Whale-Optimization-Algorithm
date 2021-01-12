@@ -54,7 +54,7 @@ class BWOA():
                 
                 if p<0.4:
                     D = np.abs( C*self.gBest_X - self.X[i] )
-                    TF = np.abs( np.pi/3 * np.arctan(np.pi/3 * A * D) + 0.02 )
+                    TF = np.abs( 3/np.pi * np.arctan(np.pi/3 * A * D) + 0.02 )
                     if np.abs(A)<1:
                         idx1 = rd<TF
                         self.X[i, idx1] = 1 - self.X[i, idx1]
