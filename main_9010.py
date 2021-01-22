@@ -27,7 +27,7 @@ def Breastcancer_test(x):
     
     for i in range(x.shape[0]):
         if np.sum(x[i, :])>0:
-            score = cross_val_score(KNeighborsClassifier(n_neighbors=5), X[:, x[i, :]], y, cv=skf)
+            score = cross_val_score(KNeighborsClassifier(n_neighbors=5), X[:, x[i, :].astype(bool)], y, cv=skf)
             loss[i] = 0.99*(1-score.mean()) + 0.01*(np.sum(x[i, :])/X.shape[1])
         else:
             loss[i] = np.inf

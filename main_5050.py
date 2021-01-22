@@ -26,8 +26,8 @@ def Breastcancer_test(x):
     
     for i in range(x.shape[0]):
         if np.sum(x[i, :])>0:
-            knn = KNeighborsClassifier(n_neighbors=5).fit(X_train[:, x[i, :]], y_train)
-            score = accuracy_score(knn.predict(X_test[:, x[i, :]]), y_test)
+            knn = KNeighborsClassifier(n_neighbors=5).fit(X_train[:, x[i, :].astype(bool)], y_train)
+            score = accuracy_score(knn.predict(X_test[:, x[i, :].astype(bool)]), y_test)
             loss[i] = 0.99*(1-score) + 0.01*(np.sum(x[i, :])/X_train.shape[1])
         else:
             loss[i] = np.inf
