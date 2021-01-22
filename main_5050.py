@@ -39,9 +39,9 @@ optimizer = BWOA(fit_func=Breastcancer_test,
 optimizer.opt()
 
 knn = KNeighborsClassifier(n_neighbors=5)
-knn.fit(X_train[:, optimizer.gBest_X], y_train)
+knn.fit(X_train[:, optimizer.gBest_X.astype(bool)], y_train)
 print(np.sum(optimizer.gBest_X))
-print(accuracy_score(knn.predict(X_test[:, optimizer.gBest_X]), y_test))
+print(accuracy_score(knn.predict(X_test[:, optimizer.gBest_X.astype(bool)]), y_test))
 
 knn = KNeighborsClassifier(n_neighbors=5)
 knn.fit(X_train, y_train)
