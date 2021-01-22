@@ -39,7 +39,7 @@ optimizer = BWOA(fit_func=Breastcancer_test,
                   num_dim=X.shape[1], num_particle=5, max_iter=70, x_max=1, x_min=0)
 optimizer.opt()
 
-score = cross_val_score(KNeighborsClassifier(n_neighbors=5), X[:, optimizer.gBest_X], y, cv=skf)
+score = cross_val_score(KNeighborsClassifier(n_neighbors=5), X[:, optimizer.gBest_X.astype(bool)], y, cv=skf)
 print(np.sum(optimizer.gBest_X))
 print(score.mean())
 
