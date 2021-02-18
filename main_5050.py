@@ -41,25 +41,6 @@ Vote = pd.read_csv('Vote.csv', header=None).values
 WaveformEW = pd.read_csv('WaveformEW.csv', header=None).values
 Wine = pd.read_csv('Wine.csv', header=None).values
 Zoo = pd.read_csv('Zoo.csv', header=None).values
-
-X_train1, X_test1, y_train1, y_test1 = train_test_split(Breastcancer[:, :-1], Breastcancer[:, -1], stratify=Breastcancer[:, -1], test_size=0.5)
-X_train2, X_test2, y_train2, y_test2 = train_test_split(BreastEW[:, :-1], BreastEW[:, -1], stratify=BreastEW[:, -1], test_size=0.5)
-X_train3, X_test3, y_train3, y_test3 = train_test_split(Congress[:, :-1], Congress[:, -1], stratify=Congress[:, -1], test_size=0.5)
-X_train4, X_test4, y_train4, y_test4 = train_test_split(Exactly[:, :-1], Exactly[:, -1], stratify=Exactly[:, -1], test_size=0.5)
-X_train5, X_test5, y_train5, y_test5 = train_test_split(Exactly2[:, :-1], Exactly2[:, -1], stratify=Exactly2[:, -1], test_size=0.5)
-X_train6, X_test6, y_train6, y_test6 = train_test_split(HeartEW[:, :-1], HeartEW[:, -1], stratify=HeartEW[:, -1], test_size=0.5)
-X_train7, X_test7, y_train7, y_test7 = train_test_split(Ionosphere[:, :-1], Ionosphere[:, -1], stratify=Ionosphere[:, -1], test_size=0.5)
-X_train8, X_test8, y_train8, y_test8 = train_test_split(KrVsKpEW[:, :-1], KrVsKpEW[:, -1], stratify=KrVsKpEW[:, -1], test_size=0.5)
-X_train9, X_test9, y_train9, y_test9 = train_test_split(Lymphography[:, :-1], Lymphography[:, -1], stratify=Lymphography[:, -1], test_size=0.5)
-X_train10, X_test10, y_train10, y_test10 = train_test_split(M_of_n[:, :-1], M_of_n[:, -1], stratify=M_of_n[:, -1], test_size=0.5)
-X_train11, X_test11, y_train11, y_test11 = train_test_split(PenglungEW[:, :-1], PenglungEW[:, -1], stratify=PenglungEW[:, -1], test_size=0.5)
-X_train12, X_test12, y_train12, y_test12 = train_test_split(Sonar[:, :-1], Sonar[:, -1], stratify=Sonar[:, -1], test_size=0.5)
-X_train13, X_test13, y_train13, y_test13 = train_test_split(SpectEW[:, :-1], SpectEW[:, -1], stratify=SpectEW[:, -1], test_size=0.5)
-X_train14, X_test14, y_train14, y_test14 = train_test_split(Tic_tac_toe[:, :-1], Tic_tac_toe[:, -1], stratify=Tic_tac_toe[:, -1], test_size=0.5)
-X_train15, X_test15, y_train15, y_test15 = train_test_split(Vote[:, :-1], Vote[:, -1], stratify=Vote[:, -1], test_size=0.5)
-X_train16, X_test16, y_train16, y_test16 = train_test_split(WaveformEW[:, :-1], WaveformEW[:, -1], stratify=WaveformEW[:, -1], test_size=0.5)
-X_train17, X_test17, y_train17, y_test17 = train_test_split(Wine[:, :-1], Wine[:, -1], stratify=Wine[:, -1], test_size=0.5)
-X_train18, X_test18, y_train18, y_test18 = train_test_split(Zoo[:, :-1], Zoo[:, -1], stratify=Zoo[:, -1], test_size=0.5)
 #------------------------------------------------------------------------------
 
 
@@ -95,7 +76,8 @@ for i in range(times):
     total_time = time.time()
     #------------------------------------------------------------------------------
     
-    
+
+    X_train1, X_test1, y_train1, y_test1 = train_test_split(Breastcancer[:, :-1], Breastcancer[:, -1], stratify=Breastcancer[:, -1], test_size=0.5)
     start1 = time.time()
     loss1 = functools.partial(fitness, X_train=X_train1, y_train=y_train1, X_test=X_test1, y_test=y_test1)
     optimizer = BWOA(fit_func=loss1, 
@@ -118,7 +100,8 @@ for i in range(times):
     # print('==='*16)
     #------------------------------------------------------------------------------
     
-    
+
+    X_train2, X_test2, y_train2, y_test2 = train_test_split(BreastEW[:, :-1], BreastEW[:, -1], stratify=BreastEW[:, -1], test_size=0.5)
     start2 = time.time()
     loss2 = functools.partial(fitness, X_train=X_train2, y_train=y_train2, X_test=X_test2, y_test=y_test2)
     optimizer = BWOA(fit_func=loss2, 
@@ -137,6 +120,7 @@ for i in range(times):
     #------------------------------------------------------------------------------
     
     
+    X_train3, X_test3, y_train3, y_test3 = train_test_split(Congress[:, :-1], Congress[:, -1], stratify=Congress[:, -1], test_size=0.5)
     start3 = time.time()
     loss3 = functools.partial(fitness, X_train=X_train3, y_train=y_train3, X_test=X_test3, y_test=y_test3)
     optimizer = BWOA(fit_func=loss3, 
@@ -154,7 +138,8 @@ for i in range(times):
     table[1, 2] += np.sum(optimizer.gBest_X)/len(optimizer.gBest_X)
     #------------------------------------------------------------------------------
     
-    
+
+    X_train4, X_test4, y_train4, y_test4 = train_test_split(Exactly[:, :-1], Exactly[:, -1], stratify=Exactly[:, -1], test_size=0.5)
     start4 = time.time()
     loss4 = functools.partial(fitness, X_train=X_train4, y_train=y_train4, X_test=X_test4, y_test=y_test4)
     optimizer = BWOA(fit_func=loss4, 
@@ -173,6 +158,7 @@ for i in range(times):
     #------------------------------------------------------------------------------
     
     
+    X_train5, X_test5, y_train5, y_test5 = train_test_split(Exactly2[:, :-1], Exactly2[:, -1], stratify=Exactly2[:, -1], test_size=0.5)
     start5 = time.time()
     loss5 = functools.partial(fitness, X_train=X_train5, y_train=y_train5, X_test=X_test5, y_test=y_test5)
     optimizer = BWOA(fit_func=loss5, 
@@ -190,7 +176,8 @@ for i in range(times):
     table[1, 4] += np.sum(optimizer.gBest_X)/len(optimizer.gBest_X)
     #------------------------------------------------------------------------------
     
-    
+
+    X_train6, X_test6, y_train6, y_test6 = train_test_split(HeartEW[:, :-1], HeartEW[:, -1], stratify=HeartEW[:, -1], test_size=0.5)
     start6 = time.time()
     loss6 = functools.partial(fitness, X_train=X_train6, y_train=y_train6, X_test=X_test6, y_test=y_test6)
     optimizer = BWOA(fit_func=loss6, 
@@ -208,7 +195,8 @@ for i in range(times):
     table[1, 5] += np.sum(optimizer.gBest_X)/len(optimizer.gBest_X)
     #------------------------------------------------------------------------------
     
-    
+
+    X_train7, X_test7, y_train7, y_test7 = train_test_split(Ionosphere[:, :-1], Ionosphere[:, -1], stratify=Ionosphere[:, -1], test_size=0.5)
     start7 = time.time()
     loss7 = functools.partial(fitness, X_train=X_train7, y_train=y_train7, X_test=X_test7, y_test=y_test7)
     optimizer = BWOA(fit_func=loss7, 
@@ -226,7 +214,8 @@ for i in range(times):
     table[1, 6] += np.sum(optimizer.gBest_X)/len(optimizer.gBest_X)
     #------------------------------------------------------------------------------
     
-    
+
+    X_train8, X_test8, y_train8, y_test8 = train_test_split(KrVsKpEW[:, :-1], KrVsKpEW[:, -1], stratify=KrVsKpEW[:, -1], test_size=0.5)
     start8 = time.time()
     loss8 = functools.partial(fitness, X_train=X_train8, y_train=y_train8, X_test=X_test8, y_test=y_test8)
     optimizer = BWOA(fit_func=loss8, 
@@ -244,7 +233,8 @@ for i in range(times):
     table[1, 7] += np.sum(optimizer.gBest_X)/len(optimizer.gBest_X)
     #------------------------------------------------------------------------------
     
-    
+
+    X_train9, X_test9, y_train9, y_test9 = train_test_split(Lymphography[:, :-1], Lymphography[:, -1], stratify=Lymphography[:, -1], test_size=0.5)
     start9 = time.time()
     loss9 = functools.partial(fitness, X_train=X_train9, y_train=y_train9, X_test=X_test9, y_test=y_test9)
     optimizer = BWOA(fit_func=loss9, 
@@ -262,7 +252,8 @@ for i in range(times):
     table[1, 8] += np.sum(optimizer.gBest_X)/len(optimizer.gBest_X)
     #------------------------------------------------------------------------------
     
-    
+
+    X_train10, X_test10, y_train10, y_test10 = train_test_split(M_of_n[:, :-1], M_of_n[:, -1], stratify=M_of_n[:, -1], test_size=0.5)
     start10 = time.time()
     loss10 = functools.partial(fitness, X_train=X_train10, y_train=y_train10, X_test=X_test10, y_test=y_test10)
     optimizer = BWOA(fit_func=loss10, 
@@ -281,6 +272,7 @@ for i in range(times):
     #------------------------------------------------------------------------------
     
     
+    X_train11, X_test11, y_train11, y_test11 = train_test_split(PenglungEW[:, :-1], PenglungEW[:, -1], stratify=PenglungEW[:, -1], test_size=0.5)
     start11 = time.time()
     loss11 = functools.partial(fitness, X_train=X_train11, y_train=y_train11, X_test=X_test11, y_test=y_test11)
     optimizer = BWOA(fit_func=loss11, 
@@ -299,6 +291,7 @@ for i in range(times):
     #------------------------------------------------------------------------------
     
     
+    X_train12, X_test12, y_train12, y_test12 = train_test_split(Sonar[:, :-1], Sonar[:, -1], stratify=Sonar[:, -1], test_size=0.5)
     start12 = time.time()
     loss12 = functools.partial(fitness, X_train=X_train12, y_train=y_train12, X_test=X_test12, y_test=y_test12)
     optimizer = BWOA(fit_func=loss12, 
@@ -316,7 +309,8 @@ for i in range(times):
     table[1, 11] += np.sum(optimizer.gBest_X)/len(optimizer.gBest_X)
     #------------------------------------------------------------------------------
     
-    
+
+    X_train13, X_test13, y_train13, y_test13 = train_test_split(SpectEW[:, :-1], SpectEW[:, -1], stratify=SpectEW[:, -1], test_size=0.5)
     start13 = time.time()
     loss13 = functools.partial(fitness, X_train=X_train13, y_train=y_train13, X_test=X_test13, y_test=y_test13)
     optimizer = BWOA(fit_func=loss13, 
@@ -335,6 +329,7 @@ for i in range(times):
     #------------------------------------------------------------------------------
     
     
+    X_train14, X_test14, y_train14, y_test14 = train_test_split(Tic_tac_toe[:, :-1], Tic_tac_toe[:, -1], stratify=Tic_tac_toe[:, -1], test_size=0.5)
     start14 = time.time()
     loss14 = functools.partial(fitness, X_train=X_train14, y_train=y_train14, X_test=X_test14, y_test=y_test14)
     optimizer = BWOA(fit_func=loss14, 
@@ -353,6 +348,7 @@ for i in range(times):
     #------------------------------------------------------------------------------
     
     
+    X_train15, X_test15, y_train15, y_test15 = train_test_split(Vote[:, :-1], Vote[:, -1], stratify=Vote[:, -1], test_size=0.5)
     start15 = time.time()
     loss15 = functools.partial(fitness, X_train=X_train15, y_train=y_train15, X_test=X_test15, y_test=y_test15)
     optimizer = BWOA(fit_func=loss15, 
@@ -371,6 +367,7 @@ for i in range(times):
     #------------------------------------------------------------------------------
     
     
+    X_train16, X_test16, y_train16, y_test16 = train_test_split(WaveformEW[:, :-1], WaveformEW[:, -1], stratify=WaveformEW[:, -1], test_size=0.5)
     start16 = time.time()
     loss16 = functools.partial(fitness, X_train=X_train16, y_train=y_train16, X_test=X_test16, y_test=y_test16)
     optimizer = BWOA(fit_func=loss16, 
@@ -389,6 +386,7 @@ for i in range(times):
     #------------------------------------------------------------------------------
     
     
+    X_train17, X_test17, y_train17, y_test17 = train_test_split(Wine[:, :-1], Wine[:, -1], stratify=Wine[:, -1], test_size=0.5)
     start17 = time.time()
     loss17 = functools.partial(fitness, X_train=X_train17, y_train=y_train17, X_test=X_test17, y_test=y_test17)
     optimizer = BWOA(fit_func=loss17, 
@@ -408,6 +406,7 @@ for i in range(times):
     #------------------------------------------------------------------------------
     
     
+    X_train18, X_test18, y_train18, y_test18 = train_test_split(Zoo[:, :-1], Zoo[:, -1], stratify=Zoo[:, -1], test_size=0.5)
     start18 = time.time()
     loss18 = functools.partial(fitness, X_train=X_train18, y_train=y_train18, X_test=X_test18, y_test=y_test18)
     optimizer = BWOA(fit_func=loss18, 
